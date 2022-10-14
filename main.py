@@ -15,12 +15,18 @@ def calculate_broadcast(network_ip, mask_not):
 def calculate_not_operation(mask_split):
     result_list = []
     for i in range(4):
-        result_list.append(~mask_split[i] & 0xFF)
+        result_list.append(~mask_split[i] & 0xFF) # 0xFF (Hexadecimal) == 255 (integer) == 11111111 (binary)
     return result_list
 
 
 def join_numbers(address_split):
     list_str = [str(valor) for valor in address_split]
+    result = '.'.join(list_str)
+    return result
+
+
+def join_binary(address_split):
+    list_str = ['{:08b}'.format(valor) for valor in address_split]
     result = '.'.join(list_str)
     return result
 
@@ -42,11 +48,18 @@ def main():
 
     broadcast = calculate_broadcast(network_ip, mask_not)
 
-    print(f'IP: {join_numbers(ip_split)}')
-    print(f'Mask: {join_numbers(mask_split)}')
-    print(f'Network IP: {join_numbers(network_ip)}')
-    print(f'Mask (Not): {join_numbers(mask_not)}')
+    print(f'\n\n------ Resultado ------')
+    print(f'IP (binário): {join_binary(ip_split)}')
+    print(f'Máscara (binário): {join_binary(mask_split)}\n')
+
+    print(f'IP da rede: {join_numbers(network_ip)}')
+    print(f'IP da rede (binário): {join_binary(network_ip)}\n')
+
+    print(f'Máscara (Not - binário): {join_binary(mask_not)}')
+    print(f'Máscara (Not): {join_numbers(mask_not)}\n')
+
     print(f'Broadcast: {join_numbers(broadcast)}')
+    print(f'Broadcast (binário): {join_binary(broadcast)}')
 
 
 if __name__ == '__main__':
